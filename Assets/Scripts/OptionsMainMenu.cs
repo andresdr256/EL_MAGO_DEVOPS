@@ -11,16 +11,6 @@ public class OptionsMainMenu : MonoBehaviour
     public GameObject LoginPanel;
     public GameObject NewGamePanel;
     public GameObject TeamPanel;
-    public Button button;
-    public Servidor servidor;
-
-    public void OnEnable()
-    {
-        if (servidor.username != "")
-        {
-            button.interactable = true;
-        }
-    }
 
 
     public void OpenPanel(GameObject panel)
