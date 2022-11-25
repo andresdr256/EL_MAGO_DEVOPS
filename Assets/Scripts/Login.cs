@@ -14,6 +14,7 @@ public class Login : MonoBehaviour
     public TMP_InputField NameInput;
     public TMP_InputField PassInput;
     public TextMeshProUGUI mensaje;
+    public Button button;
 
     public void iniciarSesion()
     {
@@ -39,6 +40,7 @@ public class Login : MonoBehaviour
         if (servidor.respuesta.codigo == 205)
         {
             servidor.username = datos[0];
+            button.interactable= true;
         }
     }
 
@@ -57,6 +59,7 @@ public class Login : MonoBehaviour
         if (servidor.respuesta.codigo == 201)
         {
             servidor.username = datos[0];
+            button.interactable = true;
         }
     }
 
