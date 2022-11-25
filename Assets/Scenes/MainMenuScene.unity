@@ -2271,9 +2271,9 @@ MonoBehaviour:
   m_fontSize: 55
   m_fontSizeBase: 55
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 35
+  m_fontSizeMax: 55
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -5618,8 +5618,6 @@ MonoBehaviour:
   LoginPanel: {fileID: 972028195}
   NewGamePanel: {fileID: 1077047910}
   TeamPanel: {fileID: 634908449}
-  button: {fileID: 546720883}
-  servidor: {fileID: 11400000, guid: 5aa24b04e6d694243b7754342c7eb234, type: 2}
 --- !u!1 &1494726569
 GameObject:
   m_ObjectHideFlags: 0
