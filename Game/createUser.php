@@ -12,9 +12,10 @@ try{
         
             $usuario = $_POST['usuario'];
             $pass = $_POST['pass'];
-
-            $sql = "SELECT * FROM `usuario`WHERE username = '" .$usuario."'; ";
-            $resultado = $conn -> query($sql);
+            if($usuario!=""&$pass!="")
+            {
+                $sql = "SELECT * FROM `usuario`WHERE username = '" .$usuario."'; ";
+                $resultado = $conn -> query($sql);
             if($resultado->num_rows> 0){
                 echo'{"codigo":301, "mensaje": "Usuario Ya registrado","respuesta": ""}';
             }else{
@@ -26,8 +27,12 @@ try{
                 echo'{"codigo": 401,"mensaje": "Error Usuario no pudo ser creado", "respuesta": ""}';
                 } 
             }
+            }else{
+                echo'{"codigo": 402, "mensaje": "Error faltan datos para la creacion del usuario", "respuesta": ""}';
+            }
+            
         }else{
-            echo'{"codigo": 402, "mensaje": "Error faltan datos para la creacion del usuario", "respuesta": ""}';
+            echo'{"codigo": 407, "mensaje": "Los campos no pueden estar vacios", "respuesta": ""}';
         }
     }
 }catch (Exepcion $e){
