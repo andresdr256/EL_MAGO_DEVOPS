@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization.Json;
 using UnityEditor.VersionControl;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "Servidor", menuName = "Unity/Servidor", order = 1)]
 public class Servidor : ScriptableObject
@@ -18,10 +19,10 @@ public class Servidor : ScriptableObject
 
     public bool ocupado = false;
     public Respuesta respuesta;
-    public Estadistica estadistica;
 
     public IEnumerator ConsumirServicio(string nombre, string[] datos)
     {
+        respuesta = new Respuesta();
         ocupado = true;
         WWWForm formulario = new WWWForm();
         Servicio s = new Servicio();
@@ -34,6 +35,12 @@ public class Servidor : ScriptableObject
                 break;
             }
         }
+        if (datos[0].Any(c => !char.IsLetterOrDigit(c)) || datos[0].Any(c => !char.IsLetterOrDigit(c)))
+        { 
+            respuesta.mensaje = "El Nombre de usuario no debe tener simbolos especiales"; 
+            respuesta.codigo = 409;
+        }
+        else { 
         for (int i = 0; i < s.parametros.Length; i++)
         {
             formulario.AddField(s.parametros[i], datos[i]);
@@ -64,6 +71,11 @@ public class Servidor : ScriptableObject
 
         string jsonString;
         jsonString = System.Text.Encoding.UTF8.GetString(www.downloadHandler.data, 2, www.downloadHandler.data.Length - 2);
+        if (s.nombre == "Estadistica")
+        {
+            jsonString = jsonString.Remove(jsonString.Length - 3);
+            jsonString = jsonString + "]}";
+        }
         Debug.Log(jsonString);
         jsonString = jsonString.Replace('#', '"');
         Debug.Log(jsonString);
@@ -75,15 +87,12 @@ public class Servidor : ScriptableObject
         else
         {
             respuesta = JsonUtility.FromJson<Respuesta>(jsonString);
-            /*if (nombre == "Estadistica")
-            {
-                estadistica = JsonUtility.FromJson<Estadistica>(respuesta.respuesta);
-            }*/
 
         }
-
+        }
         ocupado = false;
     }
+
 }
 
 [Serializable]
@@ -99,9 +108,8 @@ public class Respuesta
 {
     public int codigo;
     public string mensaje;
-    public Estadistica respuesta;
+    public List<Estadistica> respuesta; 
 }
-
 [Serializable]
 public class Estadistica
 {
