@@ -6,11 +6,17 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
+    public int dificultad = 0;
     public float timeRemaining = 300;
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;
     private void Start()
     {
+        dificultad = StaticClass.CrossSceneDificulty;
+        if (dificultad != 0)
+        {
+            timeRemaining = 180;
+        }
         // Starts the timer automatically
         timerIsRunning = true;
     }

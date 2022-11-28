@@ -22,6 +22,9 @@ public class Servidor : ScriptableObject
 
     public IEnumerator ConsumirServicio(string nombre, string[] datos)
     {
+        char[] auxiliar;
+        string aux;
+        bool especial = false;
         respuesta = new Respuesta();
         ocupado = true;
         WWWForm formulario = new WWWForm();
@@ -35,12 +38,27 @@ public class Servidor : ScriptableObject
                 break;
             }
         }
-        if (datos[0].Any(c => !char.IsLetterOrDigit(c)) || datos[0].Any(c => !char.IsLetterOrDigit(c)))
-        { 
+        aux = datos[0];
+        aux = aux.Substring(0, aux.Length - 1);
+        auxiliar = aux.ToArray();
+        
+        foreach(char c in auxiliar)
+        {
+            Debug.Log(c);
+            if (!char.IsLetterOrDigit(c))
+            {
+                especial= true;
+                break;
+            }
+        }
+        if (especial)
+        {
+            Debug.Log("hay un simbolo especial");
             respuesta.mensaje = "El Nombre de usuario no debe tener simbolos especiales"; 
             respuesta.codigo = 409;
         }
-        else { 
+        else {
+            datos[0] = aux;
         for (int i = 0; i < s.parametros.Length; i++)
         {
             formulario.AddField(s.parametros[i], datos[i]);
